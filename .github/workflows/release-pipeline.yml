@@ -49,9 +49,7 @@ jobs:
       matrix:
         os:
           # ordered by how fast they build (muh cosmetics)
-          - ubuntu-latest
           - windows-latest
-          - macos-latest
     runs-on: ${{ matrix.os }}
     steps:
 

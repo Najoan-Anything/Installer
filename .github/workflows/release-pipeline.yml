@@ -22,6 +22,13 @@ jobs:
       old_version: ${{ steps.version_bump.outputs.old_version }}
       new_version: ${{ steps.version_bump.outputs.new_version }}
     steps:
+    
+      - name: checkout 'release'
+        uses: actions/checkout@v2
+        with:
+          ref: 'release'
+          fetch-depth: 0
+          
       - uses: actions/upload-artifact@v2
         with:
           name: source

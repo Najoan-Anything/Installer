@@ -126,7 +126,7 @@ async function downloadAndInstallAsar() {
 async function injectShims(paths) {
     const progressPerLoop = (INJECT_SHIM_PROGRESS - progress.value) / paths.length;
     for (const discordPath of paths) {
-        log("Injecting into: " + discordPath);
+        log("주입(Inject) 대상: " + discordPath);
         try {
             await fs.writeFile(path.join(discordPath, "index.js"), `require("${asarPath.replace(/\\/g, "\\\\").replace(/"/g, "\\\"")}");\nmodule.exports = require("./core.asar");`);
             log("✅ 주입(Injection) 성공");

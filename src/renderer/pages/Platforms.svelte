@@ -2,8 +2,8 @@
     import page from "../transitions/page.js";
     import PageHeader from "../common/PageHeader.svelte";
     import Multiselect from "../common/Multiselect.svelte";
-    import {goToNext} from "../common/Footer.svelte";
-    import {canGoBack, canGoForward, nextPage} from "../stores/navigation";
+    import {canGoBack, canGoForward, nextPage, state} from "../stores/navigation";
+    import {push} from "svelte-spa-router";
     import {action, platforms, paths} from "../stores/installation";
     import {platforms as platformLabels, validatePath, getBrowsePath} from "../actions/paths";
     import {remote} from "electron";
@@ -15,9 +15,11 @@
     nextPage.set(`/install`);
 
     function updateInstallButtonState() {
-        if (Object.values($platforms).some(r => r)) canGoForward.set(true);
-        else canGoForward.set(false);
-        goToNext();
+        if (Object.values($platforms).some(r => r)) {
+            canGoForward.set(true);
+            state.direction = 1;
+            push($nextPage);
+        } else canGoForward.set(false);
     }
 
     function change({target}) {

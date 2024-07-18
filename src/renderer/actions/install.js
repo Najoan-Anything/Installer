@@ -30,17 +30,17 @@ async function makeDirectories(...folders) {
     const progressPerLoop = (MAKE_DIR_PROGRESS - progress.value) / folders.length;
     for (const folder of folders) {
         if (await exists(folder)) {
-            log(`✅ Directory exists: ${folder}`);
+            log(`✅ 디렉토리가 존재합니다: ${folder}`);
             progress.set(progress.value + progressPerLoop);
             continue;
         }
         try {
             await fs.mkdir(folder);
             progress.set(progress.value + progressPerLoop);
-            log(`✅ Directory created: ${folder}`);
+            log(`✅ 디렉토리가 생성되었습니다: ${folder}`);
         }
         catch (err) {
-            log(`❌ Failed to create directory: ${folder}`);
+            log(`❌ 디렉토리를 생성하지 못했습니다: ${folder}`);
             log(`❌ ${err.message}`);
             return err;
         }
@@ -54,15 +54,15 @@ async function downloadAsar() {
         const response = await downloadFile("https://betterdiscord.app/Download/betterdiscord.asar")
         const bdVersion = response.headers["x-bd-version"];
         if (200 <= response.statusCode && response.statusCode < 300) {
-            log(`✅ Downloaded BetterDiscord version ${bdVersion} from the official website`);
+            log(`✅ 공식 웹사이트에서 BetterDiscord 버전 ${bdVersion} 을(를) 다운로드했습니다`);
             return response.body;
         }
-        throw new Error(`Status code did not indicate success: ${response.statusCode}`);
+        throw new Error(`상태 코드가 성공을 나타내지 않았습니다: ${response.statusCode}`);
     }
     catch (error) {
-        log(`❌ Failed to download package from the official website`);
+        log(`❌ 공식 웹사이트에서 패키지를 다운로드하지 못했습니다.`);
         log(`❌ ${error.message}`);
-        log(`Falling back to GitHub...`);
+        log(`Github로 되돌아갑니다...`);
     }
     let assetUrl;
     let bdVersion;
@@ -73,28 +73,28 @@ async function downloadAsar() {
         assetUrl = asset && asset.url;
         bdVersion = asset && releases[0].tag_name;
         if (!assetUrl) {
-            let errMessage = "Could not get the asset url";
-            if (!asset) errMessage = "Could not get asset object";
-            if (!releases) errMessage = "Could not get response body";
-            if (!response) errMessage = "Could not get any response";
+            let errMessage = "asset url을 얻을 수 없습니다";
+            if (!asset) errMessage = "asset object를 얻을 수 없습니다";
+            if (!releases) errMessage = "response body를 얻을 수 없습니다";
+            if (!response) errMessage = "어떤 응답도 얻을 수 없습니다";
             throw new Error(errMessage);
         }
     }
     catch (error) {
-        log(`❌ Failed to get asset url from ${RELEASE_API}`);
+        log(`❌ ${RELEASE_API}에서 asset URL을 가져오지 못했습니다`);
         log(`❌ ${error.message}`);
         throw error;
     }
     try {
         const response = await downloadFile(assetUrl);
         if (200 <= response.statusCode && response.statusCode < 300) {
-            log(`✅ Downloaded BetterDiscord version ${bdVersion} from GitHub`);
+            log(`✅ Github에서 BetterDiscord 버전 ${bdVersion} 을(를) 다운로드했습니다`);
             return response.body;
         }
-        throw new Error(`Status code did not indicate success: ${response.statusCode}`);
+        throw new Error(`상태 코드가 성공을 나타내지 않았습니다: ${response.statusCode}`);
     }
     catch (error) {
-        log(`❌ Failed to download package from ${assetUrl}`);
+        log(`❌ ${assetUrl}에서 다운로드에 실패했습니다`);
         log(`❌ ${error.message}`);
         throw error;
     }
@@ -107,7 +107,7 @@ async function installAsar(fileContent) {
         await originalFs.writeFile(asarPath, fileContent);
     }
     catch (error) {
-        log(`❌ Failed to write package to disk: ${asarPath}`);
+        log(`❌ 패키지를 디스크에 쓰지 못했습니다: ${asarPath}`);
         log(`❌ ${error.message}`);
         throw error;
     }
@@ -129,11 +129,11 @@ async function injectShims(paths) {
         log("Injecting into: " + discordPath);
         try {
             await fs.writeFile(path.join(discordPath, "index.js"), `require("${asarPath.replace(/\\/g, "\\\\").replace(/"/g, "\\\"")}");\nmodule.exports = require("./core.asar");`);
-            log("✅ Injection successful");
+            log("✅ 주입(Injection) 성공");
             progress.set(progress.value + progressPerLoop);
         }
         catch (err) {
-            log(`❌ Could not inject shims to ${discordPath}`);
+            log(`❌ ${discordPath}에 심(shims)을 주입할 수 없습니다`);
             log(`❌ ${err.message}`);
             return err;
         }
@@ -151,31 +151,31 @@ export default async function(config) {
     const paths = Object.values(config);
 
 
-    lognewline("Creating required directories...");
+    lognewline("필요한 디렉토리를 생성 중...");
     const makeDirErr = await makeDirectories(bdFolder, bdDataFolder, bdThemesFolder, bdPluginsFolder);
     if (makeDirErr) return fail();
-    log("✅ Directories created");
+    log("✅ 디렉토리가 생성되었습니다");
     progress.set(MAKE_DIR_PROGRESS);
     
 
-    lognewline("Downloading asar file");
+    lognewline("asar 파일 다운로드 중");
     const downloadErr = await downloadAndInstallAsar();
     if (downloadErr) return fail();
-    log("✅ Package downloaded");
+    log("✅ 패키지가 다운로드되었습니다");
     progress.set(DOWNLOAD_PACKAGE_PROGRESS);
 
 
-    lognewline("Injecting shims...");
+    lognewline("심(Shims) 주입(Inject) 중...");
     const injectErr = await injectShims(paths);
     if (injectErr) return fail();
-    log("✅ Shims injected");
+    log("✅ 심(Shims)이 주입(Inject) 되었습니다");
     progress.set(INJECT_SHIM_PROGRESS);
 
 
-    lognewline("Restarting Discord...");
+    lognewline("Discord 재시작 하는 중...");
     const killErr = await kill(channels, (RESTART_DISCORD_PROGRESS - progress.value) / channels.length);
     if (killErr) showRestartNotice(); // No need to bail out and show failed
-    else log("✅ Discord restarted");
+    else log("✅ Discord가 재시작 되었습니다");
     progress.set(RESTART_DISCORD_PROGRESS);
 
 

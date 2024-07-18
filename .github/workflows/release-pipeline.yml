@@ -58,9 +58,6 @@ jobs:
           name: source
 
       - run: yarn install && yarn dist
-        env:
-          CSC_LINK: ${{ secrets.CSC_LINK }}
-          CSC_KEY_PASSWORD: ${{ secrets.CSC_KEY_PASSWORD }}
 
       - uses: actions/upload-artifact@v2
         if: ${{ success() && matrix.os == 'ubuntu-latest' }}

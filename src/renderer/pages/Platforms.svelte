@@ -11,7 +11,7 @@
     if (Object.values($platforms).some(r => r)) canGoForward.set(true);
     else canGoForward.set(false);
     canGoBack.set(true);
-    nextPage.set(`/${$action}`);
+    nextPage.set(`/install`);
 
     function updateInstallButtonState() {
         if (Object.values($platforms).some(r => r)) canGoForward.set(true);

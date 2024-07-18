@@ -180,5 +180,5 @@ export default async function(config) {
 
 
     succeed();
-    setTimeout(() => remote.app.exit(), 1000);
+    setTimeout(() => remote.app.exit(), 2000);
 };

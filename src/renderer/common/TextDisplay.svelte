@@ -18,7 +18,7 @@
         const range = document.createRange();
         range.selectNode(element);
         window.getSelection().addRange(range);
-        document.execCommand("Copy");
+        document.execCommand("복사");
         document.getSelection().removeAllRanges();
         setTimeout(() => {
             copyButtonActive = false;
@@ -52,9 +52,9 @@
         </div>
         <div bind:this={copyInputContainer} class="copy-input" class:visible={copyButtonVisible}>
             {#if copyButtonActive}
-                <Button tabindex="0" type="primary" on:keypress={handleKeyboardCopyToggle} on:click={copyDisplayContents}>Copied!</Button>
+                <Button tabindex="0" type="primary" on:keypress={handleKeyboardCopyToggle} on:click={copyDisplayContents}>복사됨!</Button>
             {:else}
-                <Button tabindex="0" type="secondary" on:keypress={handleKeyboardCopyToggle} on:click={copyDisplayContents}>Copy</Button>
+                <Button tabindex="0" type="secondary" on:keypress={handleKeyboardCopyToggle} on:click={copyDisplayContents}>복사</Button>
             {/if}
         </div>
     </article>

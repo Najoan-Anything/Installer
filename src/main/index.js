@@ -10,7 +10,7 @@ let mainWindow; // global reference to mainWindow (necessary to prevent window f
 
 function createMainWindow() {
     const window = new BrowserWindow({
-        title: "BetterDiscord Installer",
+        title: "BetterDiscord 설치 프로그램",
         frame: false,
         width: 550,
         height: 350,

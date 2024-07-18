@@ -18,7 +18,7 @@
         const range = document.createRange();
         range.selectNode(element);
         window.getSelection().addRange(range);
-        document.execCommand("복사");
+        document.execCommand("Copy");
         document.getSelection().removeAllRanges();
         setTimeout(() => {
             copyButtonActive = false;

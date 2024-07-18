@@ -65,7 +65,7 @@
         <Multiselect
             on:change={change}
             on:click={click}
-            description={$paths[channel] || "Not Found"}
+            description={$paths[channel] || "찾을 수 없음"}
             value={channel}
             checked={$paths[channel] && $platforms[channel]}
             disabled={!$paths[channel]}

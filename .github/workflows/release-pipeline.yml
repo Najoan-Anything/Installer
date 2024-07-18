@@ -35,6 +35,8 @@ jobs:
   # Runs once on each release platform.
   build:
     name: Build
+    needs:
+      - prepare
     strategy:
       fail-fast: true
       matrix:
@@ -82,6 +84,7 @@ jobs:
   publish:
     name: Draft Release
     needs:
+      - prepare
       - build
     runs-on: ubuntu-latest
     steps:

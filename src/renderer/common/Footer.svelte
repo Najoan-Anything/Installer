@@ -26,7 +26,7 @@
         nextButtonContent = actionText;
     }
     else {
-        nextButtonContent = "Next";
+        nextButtonContent = "다음";
     }
     
     function navigatePage() {

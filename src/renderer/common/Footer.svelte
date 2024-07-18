@@ -7,7 +7,7 @@
     import {canGoForward, canGoBack, nextPage, state} from "../stores/navigation";
     import {push, pop, location} from "svelte-spa-router";
 
-    let nextButtonContent = "Next";
+    let nextButtonContent = "다음";
 
     async function goToNext() {
         state.direction = 1;
@@ -45,8 +45,8 @@
 <footer class="install-footer">
     <SocialLinks/>
     <ButtonGroup>
-        <Button type="secondary" disabled={!$canGoBack} on:click={goBack}>Back</Button>
-        <Button type="primary" disabled={!$canGoForward} on:click={goToNext}>{#if $nextPage}{nextButtonContent}{:else}Close{/if}</Button>
+        <Button type="secondary" disabled={!$canGoBack} on:click={goBack}>뒤로</Button>
+        <Button type="primary" disabled={!$canGoForward} on:click={goToNext}>{#if $nextPage}{nextButtonContent}{:else}닫기{/if}</Button>
     </ButtonGroup>
 </footer>
 

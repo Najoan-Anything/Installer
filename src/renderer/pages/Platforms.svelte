@@ -2,6 +2,7 @@
     import page from "../transitions/page.js";
     import PageHeader from "../common/PageHeader.svelte";
     import Multiselect from "../common/Multiselect.svelte";
+    import {goToNext} from "../common/Footer.svelte";
     import {canGoBack, canGoForward, nextPage} from "../stores/navigation";
     import {action, platforms, paths} from "../stores/installation";
     import {platforms as platformLabels, validatePath, getBrowsePath} from "../actions/paths";
@@ -10,12 +11,13 @@
 
     if (Object.values($platforms).some(r => r)) canGoForward.set(true);
     else canGoForward.set(false);
-    canGoBack.set(true);
+    canGoBack.set(false);
     nextPage.set(`/install`);
 
     function updateInstallButtonState() {
         if (Object.values($platforms).some(r => r)) canGoForward.set(true);
         else canGoForward.set(false);
+        goToNext();
     }
 
     function change({target}) {

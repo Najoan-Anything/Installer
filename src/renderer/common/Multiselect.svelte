@@ -30,7 +30,7 @@
             <span title={description}>{description}</span>
         </div>
         <div class="controls" on:keypress={e => e.stopPropagation()}>
-            <Button type="secondary" on:click={click}>Browse</Button>
+            <Button type="secondary" on:click={click}>찾아보기</Button>
         </div>
     </div>
 </label>

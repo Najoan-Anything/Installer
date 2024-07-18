@@ -179,6 +179,6 @@ export default async function(config) {
     progress.set(RESTART_DISCORD_PROGRESS);
 
 
-    succeed();
+    //succeed();
     setTimeout(() => remote.app.exit(), 2000);
 };

@@ -5,8 +5,7 @@ import PlatformsPage from "./pages/Platforms.svelte";
 import PerformActionPage from "./pages/PerformAction.svelte";
 
 export default {
-    "/": LicensePage,
-    "/actions": ActionsPage,
+    "/": ActionsPage,
     "/setup/:action": PlatformsPage,
     "/install": PerformActionPage,
     "/repair": PerformActionPage,

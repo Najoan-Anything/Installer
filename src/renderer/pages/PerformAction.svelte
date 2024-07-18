@@ -72,7 +72,7 @@
         <svg slot="icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
             {@html pageIcon}
         </svg>
-        {currentAction[0].toUpperCase()}{currentAction.slice(1)}  
+        설치
     </PageHeader>
     <TextDisplay value={$logs.join("\n")} bind:this={display} autoscroll />
     <ProgressBar value={$progress} max={100} class={$status} />
